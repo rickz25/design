@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ"
+    crossorigin="anonymous">
+
+  <link rel="stylesheet" href="css/main.css">
+  <title>View My Work</title>
+</head>
+
+<body>
+  <header>
+    <div class="menu-btn">
+      <div class="btn-line"></div>
+      <div class="btn-line"></div>
+      <div class="btn-line"></div>
+    </div>
+
+    <nav class="menu">
+      <div class="menu-branding">
+        <div class="portrait"></div>
+      </div>
+      <ul class="menu-nav">
+        <li class="nav-item">
+          <a href="index.html" class="nav-link">
+            Home
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="about.html" class="nav-link">
+            About Me
+          </a>
+        </li>
+        <li class="nav-item current">
+          <a href="work.html" class="nav-link">
+            My Work
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="contact.html" class="nav-link">
+            Contact Info
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="work">
+    <h1 class="lg-heading">
+      My
+      <span class="text-secondary">Work</span>
+    </h1>
+    <h2 class="sm-heading">
+      CRUD Resful AP
+
+      <body>
+        <div class="container">
+          <div class="d-flex">
+            <input type="text" id="filterInput" placeholder="Search names...">
+            <div id="output"></div>
+
+            <!-- add display -->
+            <form id="addPost">
+              <div class="form-group">
+                <input type="text" id="name" placeholder="Name" required>
+                <input type="email" id="email" placeholder="Email" required>
+                <input type="text" id="age" placeholder="Age" required>
+              </div>
+              <input type="submit" class="btn btn-secondary" value="Add Post">
+            </form>
+            <!-- delete display -->
+            <form id="deletePost">
+              <div class="form-group">
+                <input type="number" id="id" placeholder="type ID to delete">
+              </div>
+              <input type="submit" value="Delete">
+            </form>
+
+            <script>
+              document.getElementById('addPost').addEventListener('submit', addPost);
+              document.getElementById('deletePost').addEventListener('submit', deletePost);
+
+
+
+              fetch('https://backend-restful-api.000webhostapp.com/backend_control_api/api/read.php')
+                .then((res) => res.json())
+                .then((data) => {
+                  let output = '<h2 class="mb-4">From Backend API</h2>';
+                  data.forEach(function (post) {
+                    output +=
+                      `
+            <div class="card card-body mb-3" class="sm-heading">
+              <ul id="names" class="collection with-header" class="sm-heading">
+              <li class="collection-item">
+              <span class="text-secondary">ID:</span>
+              <a href="#"> ${post.id}</a>
+              </li>
+              <li class="collection-item">
+              <span class="text-secondary">Name:</span>
+              <a href="#">${post.name}</a>
+              </li>
+              <li class="collection-item">
+              <span class="text-secondary">Email:</span>
+              <a href="#">${post.email}</a>
+              </li>
+              <li class="collection-item">
+              <span class="text-secondary">Age:</span>
+              <a href="#">${post.age}</a>
+              </li>
+              <li class="collection-item">
+              <span class="text-secondary">Created_at:</span>
+              <a href="#">${post.created_at}</a>
+              </li>
+                 </ul>
+            </div>
+          `;
+                  });
+                  document.getElementById('output').innerHTML = output;
+                })
+
+
+              //add post
+              function addPost(e) {
+                e.preventDefault();
+                let name = document.getElementById('name').value;
+                let email = document.getElementById('email').value;
+                let age = document.getElementById('age').value;
+
+                fetch('https://backend-restful-api.000webhostapp.com/backend_control_api/api/create.php', {
+                    method: 'POST',
+                    headers: {
+                      'Accept': 'application/json, text/plain, */*',
+                      'Content-type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                      name: name,
+                      email: email,
+                      age: age
+                    })
+                  })
+                  .then((res) => res.json())
+                  .then((data) => console.log(data))
+              }
+
+
+
+              function deletePost(e) {
+                e.preventDefault();
+                let id = document.getElementById('id').value;
+                fetch('https://backend-restful-api.000webhostapp.com/backend_control_api/api/delete.php', {
+                  method: 'DELETE',
+                  headers: {
+                    'Accept': 'application/json, text/plain, */*',
+                    'Content-type': 'application/json'
+                  },
+                  body: JSON.stringify({
+                    id: id
+                  })
+                }).then((res) => res.json()).then((data) => console.log(data))
+              }
+            </script>
+
+
+            <script>
+              // Get input element
+              let filterInput = document.getElementById('filterInput');
+              // Add event listener
+              filterInput.addEventListener('keyup', filterNames);
+
+              function filterNames() {
+                // Get value of input
+                let filterValue = document.getElementById('filterInput').value.toUpperCase();
+
+                // Get names ul
+                let ul = document.getElementById('names');
+                // Get lis from ul
+                let li = ul.querySelectorAll('li.collection-item');
+
+                // Loop through collection-item lis
+                for (let i = 0; i < li.length; i++) {
+                  let a = li[i].getElementsByTagName('a')[0];
+                  // If matched
+                  if (a.innerHTML.toUpperCase().indexOf(filterValue) > -1) {
+                    li[i].style.display = '';
+                  } else {
+                    li[i].style.display = 'none';
+                  }
+                }
+
+              }
+            </script>
+            <!-- <div class="item">
+        <a href="#!">
+          <img src="img/projects/project5.jpg" alt="Project">
+        </a>
+        <a href="#" class="btn-light">
+          <i class="fas fa-eye"></i> Project
+        </a>
+        <a href="#" class="btn-dark">
+          <i class="fab fa-github"></i> Github
+        </a>
+      </div> -->
+          </div>
+  </main>
+
+  <footer id="main-footer">
+    Copyright &copy; 2018
+  </footer>
+
+  <script src="js/main.js"></script>
+  </body>
+
+</html>
