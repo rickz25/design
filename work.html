@@ -55,69 +55,66 @@
       <span class="text-secondary">Work</span>
     </h1>
     <h2 class="sm-heading">
-      CRUD Resful AP
+      CRUD Resful API
 
       <body>
         <div class="container">
           <div class="d-flex">
-            <input type="text" id="filterInput" placeholder="Search names...">
             <div id="output"></div>
 
             <!-- add display -->
             <form id="addPost">
               <div class="form-group">
-                <input type="text" id="name" placeholder="Name" required>
-                <input type="email" id="email" placeholder="Email" required>
-                <input type="text" id="age" placeholder="Age" required>
+                <input type="text" id="name" class="input-text" placeholder="Name" required>
+                <input type="email" id="email" class="input-text" placeholder="Email" required>
+                <input type="text" id="age" class="input-text" placeholder="Age" required>
               </div>
-              <input type="submit" class="btn btn-secondary" value="Add Post">
+              <input type="submit" class="input-submit" value="Add Post">
             </form>
             <!-- delete display -->
             <form id="deletePost">
               <div class="form-group">
-                <input type="number" id="id" placeholder="type ID to delete">
+                <input type="number" id="id" class="input-text" placeholder="type ID to delete">
               </div>
-              <input type="submit" value="Delete">
+              <input type="submit" class="input-submit" value="Delete">
             </form>
 
             <script>
               document.getElementById('addPost').addEventListener('submit', addPost);
               document.getElementById('deletePost').addEventListener('submit', deletePost);
-
-
-
+              //read api
               fetch('https://backend-restful-api.000webhostapp.com/backend_control_api/api/read.php')
                 .then((res) => res.json())
                 .then((data) => {
-                  let output = '<h2 class="mb-4">From Backend API</h2>';
+                  let output = '<h2 class="mb-4"></h2>';
                   data.forEach(function (post) {
                     output +=
                       `
-            <div class="card card-body mb-3" class="sm-heading">
-              <ul id="names" class="collection with-header" class="sm-heading">
-              <li class="collection-item">
-              <span class="text-secondary">ID:</span>
-              <a href="#"> ${post.id}</a>
-              </li>
-              <li class="collection-item">
-              <span class="text-secondary">Name:</span>
-              <a href="#">${post.name}</a>
-              </li>
-              <li class="collection-item">
-              <span class="text-secondary">Email:</span>
-              <a href="#">${post.email}</a>
-              </li>
-              <li class="collection-item">
-              <span class="text-secondary">Age:</span>
-              <a href="#">${post.age}</a>
-              </li>
-              <li class="collection-item">
-              <span class="text-secondary">Created_at:</span>
-              <a href="#">${post.created_at}</a>
-              </li>
-                 </ul>
-            </div>
-          `;
+                          <div class="sm-heading">
+                            <ul id="names">
+                            <li class="collection-item">
+                            <span class="text-secondary">ID:</span>
+                            <a href="#"> ${post.id}</a>
+                            </li>
+                            <li class="collection-item">
+                            <span class="text-secondary">Name:</span>
+                            <a href="#">${post.name}</a>
+                            </li>
+                            <li class="collection-item">
+                            <span class="text-secondary">Email:</span>
+                            <a href="#">${post.email}</a>
+                            </li>
+                            <li class="collection-item">
+                            <span class="text-secondary">Age:</span>
+                            <a href="#">${post.age}</a>
+                            </li>
+                            <li class="collection-item">
+                            <span class="text-secondary">Created_at:</span>
+                            <a href="#">${post.created_at}</a>
+                            </li>
+                              </ul>
+                          </div>
+                        `;
                   });
                   document.getElementById('output').innerHTML = output;
                 })
@@ -126,6 +123,7 @@
               //add post
               function addPost(e) {
                 e.preventDefault();
+                let id = document.getElementById('id').value;
                 let name = document.getElementById('name').value;
                 let email = document.getElementById('email').value;
                 let age = document.getElementById('age').value;
@@ -147,7 +145,6 @@
               }
 
 
-
               function deletePost(e) {
                 e.preventDefault();
                 let id = document.getElementById('id').value;
@@ -161,36 +158,6 @@
                     id: id
                   })
                 }).then((res) => res.json()).then((data) => console.log(data))
-              }
-            </script>
-
-
-            <script>
-              // Get input element
-              let filterInput = document.getElementById('filterInput');
-              // Add event listener
-              filterInput.addEventListener('keyup', filterNames);
-
-              function filterNames() {
-                // Get value of input
-                let filterValue = document.getElementById('filterInput').value.toUpperCase();
-
-                // Get names ul
-                let ul = document.getElementById('names');
-                // Get lis from ul
-                let li = ul.querySelectorAll('li.collection-item');
-
-                // Loop through collection-item lis
-                for (let i = 0; i < li.length; i++) {
-                  let a = li[i].getElementsByTagName('a')[0];
-                  // If matched
-                  if (a.innerHTML.toUpperCase().indexOf(filterValue) > -1) {
-                    li[i].style.display = '';
-                  } else {
-                    li[i].style.display = 'none';
-                  }
-                }
-
               }
             </script>
             <!-- <div class="item">
@@ -210,7 +177,8 @@
   <footer id="main-footer">
     Copyright &copy; 2018
   </footer>
-
+  <script>
+  </script>
   <script src="js/main.js"></script>
   </body>
 

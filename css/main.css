@@ -211,6 +211,29 @@ main {
       .boxes div:hover span {
         color: #fff; }
 
+.input-text {
+  font-size: 1.7rem;
+  padding: .3rem 1rem;
+  margin-bottom: 3rem;
+  transition: all 0.5s ease-out; }
+  .input-text:hover {
+    font-size: 2rem;
+    padding: 1.3rem 1rem;
+    background: #3b3939;
+    color: #fff; }
+    .input-text:hover span {
+      color: #fff; }
+
+.input-submit {
+  font-size: 2rem;
+  padding: .3rem 1rem;
+  margin-bottom: 3rem;
+  background-color: #00CB84;
+  transition: all 0.5s ease-out; }
+  .input-submit:hover {
+    color: white;
+    background: #3b3939; }
+
 .btn, .btn-dark, .btn-light {
   display: block;
   padding: 0.5rem 1rem;
