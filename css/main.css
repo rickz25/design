@@ -211,6 +211,11 @@ main {
       .boxes div:hover span {
         color: #fff; }
 
+form {
+  display: grid;
+  align-items: center;
+  justify-content: center; }
+
 .input-text {
   font-size: 1.7rem;
   padding: .3rem 1rem;
@@ -287,6 +292,29 @@ nav a:hover::before {
 
 ul {
   list-style: none; }
+
+table.styled {
+  width: 100%;
+  border-collapse: collapse; }
+
+table.styled thead,
+table.styled th {
+  text-align: center; }
+
+table.styled th,
+table.styled td {
+  border: 1px solid lightgray;
+  padding: 5px;
+  text-align: center;
+  font-size: 1.3rem; }
+
+footer table.styled th {
+  background: none;
+  text-align: left; }
+
+footer table.styled th,
+footer table.styled td {
+  border: 0; }
 
 @media screen and (min-width: 1171px) {
   .projects {

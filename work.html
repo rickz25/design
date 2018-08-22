@@ -55,112 +55,113 @@
       <span class="text-secondary">Work</span>
     </h1>
     <h2 class="sm-heading">
-      CRUD Resful API
+      This is one of my sample work, CRUD api
+    </h2>
 
-      <body>
-        <div class="container">
-          <div class="d-flex">
-            <div id="output"></div>
+    <body>
+      <div class="container">
+        <div class="d-flex">
 
-            <!-- add display -->
-            <form id="addPost">
-              <div class="form-group">
-                <input type="text" id="name" class="input-text" placeholder="Name" required>
-                <input type="email" id="email" class="input-text" placeholder="Email" required>
-                <input type="text" id="age" class="input-text" placeholder="Age" required>
-              </div>
-              <input type="submit" class="input-submit" value="Add Post">
-            </form>
-            <!-- delete display -->
-            <form id="deletePost">
-              <div class="form-group">
-                <input type="number" id="id" class="input-text" placeholder="type ID to delete">
-              </div>
-              <input type="submit" class="input-submit" value="Delete">
-            </form>
+          <input type="search" class="light-table-filter input-text" data-table="order-table" placeholder=" Search ">
+          <table class="order-table table styled ">
+            <thead>
+              <tr>
+                <th class="input-submit">ID</th>
+                <th class="input-submit">Name</th>
+                <th class="input-submit">Email</th>
+                <th class="input-submit">Age</th>
+                <th class="input-submit">Created_at</th>
+              </tr>
+            </thead>
+            <tbody id="output">
+            </tbody>
+          </table>
+          <br>
+          <br>
 
-            <script>
-              document.getElementById('addPost').addEventListener('submit', addPost);
-              document.getElementById('deletePost').addEventListener('submit', deletePost);
-              //read api
-              fetch('https://backend-restful-api.000webhostapp.com/backend_control_api/api/read.php')
-                .then((res) => res.json())
-                .then((data) => {
-                  let output = '<h2 class="mb-4"></h2>';
-                  data.forEach(function (post) {
-                    output +=
-                      `
-                          <div class="sm-heading">
-                            <ul id="names">
-                            <li class="collection-item">
-                            <span class="text-secondary">ID:</span>
-                            <a href="#"> ${post.id}</a>
-                            </li>
-                            <li class="collection-item">
-                            <span class="text-secondary">Name:</span>
-                            <a href="#">${post.name}</a>
-                            </li>
-                            <li class="collection-item">
-                            <span class="text-secondary">Email:</span>
-                            <a href="#">${post.email}</a>
-                            </li>
-                            <li class="collection-item">
-                            <span class="text-secondary">Age:</span>
-                            <a href="#">${post.age}</a>
-                            </li>
-                            <li class="collection-item">
-                            <span class="text-secondary">Created_at:</span>
-                            <a href="#">${post.created_at}</a>
-                            </li>
-                              </ul>
-                          </div>
+
+          <!-- add display -->
+          <form id="addPost">
+            <div class="form-group">
+              <input type="text" id="name" class="input-text" placeholder="Name" required="">
+              <input type="email" id="email" class="input-text" placeholder="Email" required="">
+              <input type="text" id="age" class="input-text" placeholder="Age" required="">
+            </div>
+            <input type="submit" class="input-submit" value="Add Post">
+          </form>
+          <!-- delete display -->
+          <form id="deletePost">
+            <div class="form-group">
+              <input type="number" id="id" class="input-text" placeholder="type ID to delete">
+            </div>
+            <input type="submit" class="input-submit" value="Delete">
+          </form>
+
+          <script>
+            document.getElementById('addPost').addEventListener('submit', addPost);
+            document.getElementById('deletePost').addEventListener('submit', deletePost);
+            //read api
+            fetch('https://backend-restful-api.000webhostapp.com/backend_control_api/api/read.php')
+              .then((res) => res.json())
+              .then((data) => {
+                let output = '<h2 class="mb-4"></h2>';
+                data.forEach(function (post) {
+                  output +=
+                    `
+                    <tr >
+                        <td class="input-text">${post.id}</td>
+                        <td class="input-text">${post.name}</td>
+                        <td class="input-text">${post.email}</td>
+                        <td class="input-text">${post.age}</td>
+                        <td class="input-text">${post.created_at}</td>
+                    </tr>    
                         `;
-                  });
-                  document.getElementById('output').innerHTML = output;
-                })
+                });
+                document.getElementById('output').innerHTML = output;
+              })
 
 
-              //add post
-              function addPost(e) {
-                e.preventDefault();
-                let id = document.getElementById('id').value;
-                let name = document.getElementById('name').value;
-                let email = document.getElementById('email').value;
-                let age = document.getElementById('age').value;
+            //add post
+            function addPost(e) {
+              e.preventDefault();
+              let id = document.getElementById('id').value;
+              let name = document.getElementById('name').value;
+              let email = document.getElementById('email').value;
+              let age = document.getElementById('age').value;
 
-                fetch('https://backend-restful-api.000webhostapp.com/backend_control_api/api/create.php', {
-                    method: 'POST',
-                    headers: {
-                      'Accept': 'application/json, text/plain, */*',
-                      'Content-type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                      name: name,
-                      email: email,
-                      age: age
-                    })
-                  })
-                  .then((res) => res.json())
-                  .then((data) => console.log(data))
-              }
-
-
-              function deletePost(e) {
-                e.preventDefault();
-                let id = document.getElementById('id').value;
-                fetch('https://backend-restful-api.000webhostapp.com/backend_control_api/api/delete.php', {
-                  method: 'DELETE',
+              fetch('https://backend-restful-api.000webhostapp.com/backend_control_api/api/create.php', {
+                  method: 'POST',
                   headers: {
                     'Accept': 'application/json, text/plain, */*',
                     'Content-type': 'application/json'
                   },
                   body: JSON.stringify({
-                    id: id
+                    name: name,
+                    email: email,
+                    age: age
                   })
-                }).then((res) => res.json()).then((data) => console.log(data))
-              }
-            </script>
-            <!-- <div class="item">
+                })
+                .then((res) => res.json())
+                .then((data) => alert('Post Created'))
+            }
+
+
+            function deletePost(e) {
+              e.preventDefault();
+              let id = document.getElementById('id').value;
+              fetch('https://backend-restful-api.000webhostapp.com/backend_control_api/api/delete.php', {
+                method: 'DELETE',
+                headers: {
+                  'Accept': 'application/json, text/plain, */*',
+                  'Content-type': 'application/json'
+                },
+                body: JSON.stringify({
+                  id: id
+                })
+              }).then((res) => res.json()).then((data) => console.log(data))
+            }
+          </script>
+          <!-- <div class="item">
         <a href="#!">
           <img src="img/projects/project5.jpg" alt="Project">
         </a>
@@ -171,7 +172,47 @@
           <i class="fab fa-github"></i> Github
         </a>
       </div> -->
-          </div>
+          <script>
+            (function (document) {
+              'use strict';
+              var LightTableFilter = (function (Arr) {
+                var _input;
+
+                function _onInputEvent(e) {
+                  _input
+                    = e.target;
+                  var tables = document.getElementsByClassName(_input.getAttribute('data-table'));
+                  Arr.forEach.call(tables, function (table) {
+                    Arr.forEach.call(table.tBodies, function (tbody) {
+                      Arr.forEach.call(tbody.rows, _filter);
+                    });
+                  });
+                }
+
+                function _filter(row) {
+                  var text = row.textContent.toLowerCase(),
+                    val = _input.value.toLowerCase();
+                  row.style.display = text.indexOf(val) === -1 ?
+                    'none' : 'table-row';
+                }
+                return {
+                  init: function () {
+                    var inputs = document.getElementsByClassName('light-table-filter');
+                    Arr.forEach.call(inputs, function (input) {
+                      input.oninput = _onInputEvent;
+                    });
+                  }
+                };
+              })(Array.prototype);
+              document.addEventListener('readystatechange',
+                function () {
+                  if (document.readyState === 'complete') {
+                    LightTableFilter.init();
+                  }
+                });
+            })(document);
+          </script>
+        </div>
   </main>
 
   <footer id="main-footer">
