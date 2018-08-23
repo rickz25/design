@@ -63,7 +63,7 @@
         <div class="d-flex">
 
           <input type="search" class="light-table-filter input-text" data-table="order-table" placeholder=" Search ">
-          <table class="order-table table styled ">
+          <table class="order-table table styled" id="tableCompleted">
             <thead>
               <tr>
                 <th class="input-submit">ID</th>
@@ -92,7 +92,7 @@
           <!-- delete display -->
           <form id="deletePost">
             <div class="form-group">
-              <input type="number" id="id" class="input-text" placeholder="type ID to delete">
+              <input type="number" id="id" class="input-text" placeholder="Enter ID to delete">
             </div>
             <input type="submit" class="input-submit" value="Delete">
           </form>
@@ -211,6 +211,29 @@
                   }
                 });
             })(document);
+          </script>
+
+
+          <!-- editable td -->
+          <script>
+            (function () {
+              'use-strict';
+              var td = document.getElementsByTagName('td');
+              for (var i = 0; i < td.length; i++) {
+                td[i].addEventListener(
+                  'click', change, false);
+                td[i].addEventListener('blur', changeback, false);
+              }
+
+              function change() {
+                this.contentEditable = true;
+                this.focus();
+              }
+
+              function changeback() {
+                this.removeAttribute("contentEditable");
+              }
+            }());
           </script>
         </div>
   </main>
